@@ -1,5 +1,8 @@
 import java.util.Date;
 
+import Class.Event;
+import Class.Member;
+
 public class Main {
 	public static void main(String[] args) {
 		Member user1 = new Member("yoyo","Tom", "Odell");

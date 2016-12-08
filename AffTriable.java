@@ -1,5 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
+
+import Class.Member;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
