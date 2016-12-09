@@ -1,21 +1,22 @@
-import java.io.File;
-
-import javafx.application.Application;
+import Class.Admin;
+import Class.Event;
+import Class.Member;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class IGAdmin extends Stage {
@@ -26,31 +27,62 @@ public class IGAdmin extends Stage {
 	 * @see javafx.application.Application#start(javafx.stage.Stage) interface
 	 * graphique
 	 */
-	
-	public IGAdmin() throws Exception {
-		// ---------------path and extension box--------------------------
+	 final TreeItem<Member> root = 
+		        new TreeItem<>(new Member("user ", ""),null);
+	@SuppressWarnings("unchecked")
+	public IGAdmin(Admin admin,Event event) throws Exception {
 		
-		// ----------------Destination----------------------------------------
-		
+		// ---------------profile--------------------------
+		Label profile = new Label(admin.toString());
+		// ----------------event----------------------------------------
+		Label eventlabel = new Label(event.toString());
 
-		// ---------------New name--------------------------------------------
-		
+		// ---------------members--------------------------------------------
+
+        TreeTableColumn<Member, String> IDColumn = 
+                new TreeTableColumn<>("ID");
+            IDColumn.setPrefWidth(150);
+            IDColumn.setCellValueFactory(
+                (TreeTableColumn.CellDataFeatures<Member, String> param) -> 
+                new ReadOnlyStringWrapper(param.getValue().getValue().getUserName())
+            );
+            
+        TreeTableColumn<Member, String> firstNameColumn = 
+            new TreeTableColumn<>("FirstName");
+        firstNameColumn.setPrefWidth(150);
+        firstNameColumn.setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<Member, String> param) -> 
+            new ReadOnlyStringWrapper(param.getValue().getValue().getFirstName())
+        );
+        TreeTableColumn<Member, String> lastNameColumn = 
+                new TreeTableColumn<>("LastName");
+            lastNameColumn.setPrefWidth(150);
+            lastNameColumn.setCellValueFactory(
+                (TreeTableColumn.CellDataFeatures<Member, String> param) -> 
+                new ReadOnlyStringWrapper(param.getValue().getValue().getLastName())
+            );
+
+        TreeTableColumn<Member, String> emailColumn = 
+            new TreeTableColumn<>("Email");
+        emailColumn.setPrefWidth(190);
+        emailColumn.setCellValueFactory(
+            (TreeTableColumn.CellDataFeatures<Member, String> param) -> 
+            new ReadOnlyStringWrapper(param.getValue().getValue().getEmail())
+        );
+
+        TreeTableView<Member> treeTableView = new TreeTableView<>(root);
+        treeTableView.getColumns().setAll(IDColumn,firstNameColumn,lastNameColumn, emailColumn);
 		// -------------button to launch---------------------------------------
-		Button butt = new Button("Renommer");
-		butt.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				
-			}
-		});
+		
 		HBox line3 = new HBox();
 		line3.setSpacing(8);
 		line3.setAlignment(Pos.CENTER);
-		line3.getChildren().add(butt);
+		line3.getChildren().add(treeTableView);
 
-		TitledPane t1 = new TitledPane("Dossier d'Origine",null );
-		TitledPane t2 = new TitledPane("Dossier de Destination",null );
-		TitledPane t3 = new TitledPane("Nouveaux Noms",null);
+		TitledPane t1 = new TitledPane("profile",profile );
+		t1.setVisible(true);
+		TitledPane t2 = new TitledPane("Evenement à venir",eventlabel );
+		TitledPane t3 = new TitledPane("liste des membres",treeTableView);
 		Accordion accordion = new Accordion();
 		accordion.getPanes().addAll(t1, t2, t3);
 

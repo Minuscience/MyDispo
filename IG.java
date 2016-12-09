@@ -52,7 +52,7 @@ public class IG extends Application{
 		hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
 		hbBtn.getChildren().add(btn);
 		grid.add(hbBtn, 1, 4);
-		ArrayList<Member> members = (ArrayList<Member>) Member.LoadMemberList("sav");
+		ArrayList<Member> members = (ArrayList<Member>) Member.LoadMemberList("savuser");
 		
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			 
@@ -63,7 +63,8 @@ public class IG extends Application{
 					if (member.getUserName().equals(userTextField.getText())){
 						if(member.getPassword().equals(pwBox.getText())){
 					        try {
-								IGAdmin adminW = new IGAdmin();
+					        	Event test = Event.loadEvent("test");
+								IGAdmin adminW = new IGAdmin((Admin) member,test);
 								adminW.show();
 								break;
 							} catch (Exception e1) {

@@ -100,9 +100,9 @@ public class Member implements Serializable {
 	}
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("usename : " + userName + "\n");
-		sb.append("name : " + firstName + " " + lastName.toUpperCase() + "\n");
-		sb.append("phone : " + phoneNumber + "\n");
+		sb.append("pseudo : " + userName + "\n");
+		sb.append("nom : " + firstName + " " + lastName.toUpperCase() + "\n");
+		sb.append("téléphone : " + phoneNumber + "\n");
 		sb.append("email : " + email + "\n");
 		return sb.toString();
 	}
